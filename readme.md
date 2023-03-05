@@ -1,5 +1,7 @@
 # my first api with prisma
 
+[video tutorial](https://www.youtube.com/watch?v=nuLTwqPNq-w)
+
 #### docker:
 
 ```sh
