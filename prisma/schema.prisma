@@ -11,14 +11,33 @@ datasource db {
 }
 
 model Product {
-  id         String   @id @default(uuid())
-  name       String
-  bar_code   String   @unique
-  price      Decimal
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id              String            @id @default(uuid())
+  name            String
+  bar_code        String            @unique
+  price           Decimal
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  ProductCategory ProductCategory[]
 
   @@map("products") // name table in database
 }
 
-// 40:36 https://www.youtube.com/watch?v=nuLTwqPNq-w
+model Category {
+  id              String            @id @default(uuid())
+  name            String
+  ProductCategory ProductCategory[]
+
+  @@map("categories")
+}
+
+model ProductCategory {
+  id          String   @id @default(uuid())
+  id_product  String
+  product     Product  @relation(fields: [id_product], references: [id])
+  id_category String
+  category    Category @relation(fields: [id_category], references: [id])
+
+  @@map("products_categories")
+}
+
+// 51:39 https://www.youtube.com/watch?v=nuLTwqPNq-w

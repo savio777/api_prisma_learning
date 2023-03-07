@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules ./src/server.ts",
     "ex:init-prisma": "yarn prisma init",
-    "ex:generate-migrate": "yarn prisma migrate dev"
+    "ex:generate-migrate-dev": "yarn prisma migrate dev",
+    "ex:generate-migrate-prod": "yarn prisma migrate deploy",
+    "init:prisma-studio": "npx prisma studio"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
