@@ -13,7 +13,7 @@ export class FindAllProductController {
     const skip = pageNumber && takeNumber && takeNumber * (pageNumber - 1);
 
     const products = await prismaClient.product.findMany({
-      where: { name: nameQuery },
+      where: { name: { contains: nameQuery } }, // https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#filter-conditions-and-operators
       take: takeNumber,
       skip,
       include: { ProductCategory: true },
