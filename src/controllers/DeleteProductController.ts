@@ -6,12 +6,34 @@ import { prismaClient } from "../database/prismaClient";
 
 export class DeleteProductController {
   async handle(req: Request, res: Response) {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    const product = await prismaClient.product.delete({
-      where: { id },
-    });
+      const productCategory = await prismaClient.productCategory.findFirst({
+        where: { id_product: id },
+      });
 
-    return res.json(product);
+      if (!productCategory) {
+        return res.json({ error: "not found product category" });
+      }
+
+      const deletedProductCategory = prismaClient.productCategory.delete({
+        where: { id: productCategory.id },
+      });
+
+      const deletedProduct = prismaClient.product.delete({
+        where: { id },
+      });
+
+      const transaction = await prismaClient.$transaction([
+        deletedProductCategory,
+        deletedProduct,
+      ]);
+
+      return res.json(transaction);
+    } catch (error) {
+      console.log(error);
+      return res.json({ error: "error in transaction delete" });
+    }
   }
 }

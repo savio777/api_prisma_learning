@@ -31,7 +31,7 @@ model Category {
 }
 
 model ProductCategory {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   id_product  String
   product     Product?  @relation(fields: [id_product], references: [id])
   id_category String
@@ -39,5 +39,3 @@ model ProductCategory {
 
   @@map("products_categories")
 }
-
-// 51:39 https://www.youtube.com/watch?v=nuLTwqPNq-w
